@@ -136,14 +136,8 @@ def calculate_jump_height(video_path, known_height_cm, show_video=False, smooth_
         stand_idx = np.arange(min(len(hip_y_s), 50))
 
     baseline_hip_y = float(np.mean(hip_y_s[stand_idx]))
-
-    # apex (highest point) = minimal y (because y increases downward)
     apex_hip_y = float(np.nanmin(hip_y_s))
-
-    # pixels difference (baseline - apex); guard against negatives
     jump_px = max(0.0, baseline_hip_y - apex_hip_y)
-
-    # pixel-to-cm scale from standing frames
     if len(stand_idx) > 0 and np.isfinite(body_h_px[stand_idx]).sum() > 0:
         stand_body_px = float(np.nanmean(body_h_px[stand_idx]))
         cm_per_px = known_height_cm / stand_body_px if stand_body_px > 0 else np.nan
@@ -167,7 +161,7 @@ def calculate_jump_height(video_path, known_height_cm, show_video=False, smooth_
     plt.axhline(baseline_hip_y, linestyle='--', label="Baseline (standing)")
     plt.axhline(apex_hip_y, linestyle='--', label="Apex (highest)")
     plt.gca().invert_yaxis()
-    plt.title("Vertical Jump – Hip Trajectory")
+    plt.title("Vertical Jump - Hip Trajectory")
     plt.xlabel("Frame")
     plt.ylabel("Y (pixels, inverted)")
     plt.legend()
@@ -184,8 +178,8 @@ if __name__ == "__main__":
         known_height_cm = 170.0
         print("Couldn't parse height, defaulting to 170 cm.")
 
-    video1 = r"D:\sih\videoplayback (1).mp4"
-    video2 = r"D:\sih\videoplayback.mp4"
+    video1 = r"videoplayback (1).mp4"
+    video2 = r"videoplayback.mp4"
 
     print("\n--- Video 1 ---")
     calculate_jump_height(video1, known_height_cm=known_height_cm, show_video=False)
